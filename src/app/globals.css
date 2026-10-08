@@ -1,0 +1,270 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+  --font-fancy: var(--font-fancy);
+  --font-mono: var(--font-geist-mono);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand-purple: #0F172A;
+  --color-brand-blue: #4F46E5;
+  --color-brand-cyan: #818CF8;
+
+  /* Overriding Tailwind sky colors to transition to the new color identity seamlessly */
+  --color-sky-50: #FAFBFF;   /* Surface color */
+  --color-sky-100: rgba(15, 23, 42, 0.08);  /* Border color */
+  --color-sky-200: rgba(79, 70, 229, 0.1);  /* Light secondary tint */
+  --color-sky-300: #818CF8;  /* Secondary color */
+  --color-sky-400: #6366F1;  /* Slight primary-secondary blend */
+  --color-sky-500: #4F46E5;  /* Primary color */
+  --color-sky-600: #4338CA;  /* Darker primary */
+  --color-sky-700: #3730A3;  /* Even darker primary */
+  --color-sky-800: #0F172A;
+  --color-sky-950: #FAFBFF;
+  --color-sky-900: #0F172A;  /* Dark headings color */
+  
+  --color-headings: var(--headings);
+  --color-warm-surface: var(--warm-surface);
+}
+
+:root {
+  /* Premium Dark Theme Palette - Lumora V1.4 (Monochrome Dark) */
+  --background: #050505;
+  --foreground: #A8A8A8;
+  
+  --card: #141414;
+  --card-foreground: #A8A8A8;
+  
+  --popover: #141414;
+  --popover-foreground: #A8A8A8;
+  
+  /* Primary Accent: Accent (#D9D9D9) */
+  --primary: #D9D9D9;
+  --primary-foreground: #050505;
+  
+  /* Secondary Accent / Highlight: Highlight (#F5F5F5) */
+  --secondary: #F5F5F5;
+  --secondary-foreground: #050505;
+  
+  --muted: #141414;
+  --muted-foreground: #A8A8A8;
+  
+  --accent: #D9D9D9;
+  --accent-foreground: #0A0A0A;
+  
+  --warm-surface: #141414;
+  --headings: #FFFFFF;
+  
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: rgba(217, 217, 217, 0.25);
+  --grid-stroke: rgba(217, 217, 217, 0.08);
+  
+  --radius: 1.25rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  html {
+    @apply scroll-smooth;
+    scroll-padding-top: 6rem;
+    /* Keeps the layout still when the mobile menu locks page scroll on desktop-size screens. */
+    scrollbar-gutter: stable;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline-offset: 3px;
+  }
+
+  /* <main> only receives focus from the skip link; no ring around the whole page. */
+  main[tabindex="-1"]:focus {
+    outline: none;
+  }
+  
+  h1, h2 {
+    @apply font-fancy tracking-normal font-light;
+    color: var(--headings);
+  }
+  
+  h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+    color: var(--headings);
+  }
+  
+  /* Refined dark-themed minimal glassmorphism */
+  .glass {
+    @apply bg-[#141414]/60 backdrop-blur-lg border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.5)];
+  }
+  .font-fancy {
+    font-family: var(--font-fancy), serif;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-sweep::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 20%,
+    rgba(255, 255, 255, 0.7) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+  content: '';
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 3rem;
+  }
+}
+
+@utility section-y {
+  padding-block: 5rem;
+
+  @media (width >= 48rem) {
+    padding-block: 7.5rem;
+  }
+}
+
+/* One top offset for every compact inner-page header, clear of the fixed 64px navbar.
+   The full-height home hero does not use it. */
+@utility page-header {
+  padding-top: 7rem;
+  padding-bottom: 4rem;
+
+  @media (width >= 48rem) {
+    padding-top: 9rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 9999px;
+  padding: 0.875rem 2rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  box-shadow: 0 4px 20px rgba(217, 217, 217, 0.15);
+
+  &:hover {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 25px rgba(217, 217, 217, 0.25);
+  }
+}
+
+@utility btn-secondary {
+  background-color: transparent;
+  color: var(--headings);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 0.875rem 2rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    background-color: rgba(217, 217, 217, 0.08);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+  }
+}
